@@ -8,12 +8,9 @@
  * y sacar por pantalla todos las palabras en orden de frecuencia de aparicion
  *
  * /Users/dryant/Facultad/RI/P2/datos-20201006/sherlock.epub
- * /Users/dryant/Facultad/RI/P2/datos-20201006/pg345.mobi
- * /Users/dryant/Facultad/RI/P2/datos-20201006/55667-h.htm
- * /Users/dryant/Facultad/RI/P2/DocumentacionTika-20201006/TikaInAction.pdf
- *
- *
- * sout+tab
+ * /Users/dryant/Facultad/RI/P2/datos-20201006/dracula.epub
+ * /Users/dryant/Facultad/RI/P2/datos-20201006/DonJuanTenorio.htm
+ * /Users/dryant/Facultad/RI/P2/DocumentacionTika-20201006/Iliada.pdf
  *
  * Memoria
  * ==========
@@ -28,7 +25,6 @@ package tika.main;
 import java.io.PrintStream;
 import java.lang.String;
 import java.util.InputMismatchException;
-import java.util.List;
 import java.util.Scanner;
 
 import java.io.File;
