@@ -39,7 +39,7 @@ public class DocParser {
     HashMap<String, Integer> wfmap = new HashMap<String, Integer>();
 
     //Path del archivo mapfrecuency.data
-    String dataFilePath = "/Users/dryant/IdeaProjects/Practica2Tika/mapfrecuency.data";
+    String dataFilePath = "";
 
     //Path del documento a tratar
     String bookPath;
@@ -52,14 +52,19 @@ public class DocParser {
 
     //    ==================== METODOS ====================
 
-    public DocParser() {
+    public DocParser() throws IOException {
         // Se parsean un fichero para tener algo con lo que trabajar
         bookPath = "Sherlock.epub";
+        dataFilePath = "./"+this.getFileName()+"-mf.data";
     }
 
     public void setBookPath(String bookPath) {
         this.bookPath = bookPath;
 //        System.out.println("El path del libro es " + bookPath);
+    }
+
+    public String getBookPath() {
+        return bookPath;
     }
 
     public static void printHorizontalLine(int length) {
@@ -441,19 +446,23 @@ public class DocParser {
             mensaje=mensaje+i+"\t"+(entry.getKey() + "\t" + entry.getValue())+"\n";
             i++;
         }
-        System.out.println(mensaje);
+//        System.out.println(mensaje);
 
         try {
-
             FileWriter fichero = new FileWriter(dataFilePath);
             fichero.write(mensaje);
             fichero.close();
+            System.out.println("Archivo '"+this.getDataFilePath()+"' creado correctamente.\n==========================");
 
         } catch (Exception exception) {
 
             exception.printStackTrace();
 
         }
+
+    }
+
+    protected void createPlotCommands() {
 
     }
 

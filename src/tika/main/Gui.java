@@ -8,7 +8,7 @@ public class Gui {
 
     public Gui(){
         welcomeMsg = "Practica 2 - Recuperacion de información\n-----------------------------------\nPedro Blanch Bejarano\n\n";
-        opciones = new String[]{"Mostrar tabla con info de los documentos de un directorio", "Extraer links del documento (solo URLS)", "Mostrar tabla de frecuencias de un libro","Generar archivo con tabla de frecuencias para GNUPLOT","Mostrar comando para crear "};
+        opciones = new String[]{"Mostrar tabla con info de los documentos de un directorio", "Extraer links del documento (solo URLS)", "Mostrar tabla de frecuencias de un libro","Generar archivo con tabla de frecuencias para GNUPLOT","Mostrar comando para crear gráficas en GNUPLOT"};
     }
     public void showMenu() {
         int i=1;

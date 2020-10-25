@@ -22,6 +22,7 @@
  * */
 package tika.main;
 
+import java.io.FileWriter;
 import java.io.PrintStream;
 import java.lang.String;
 import java.util.InputMismatchException;
@@ -34,8 +35,6 @@ import java.util.regex.Pattern;
 public class Main {
 
     public static <ex> void main(String[] args) throws Exception {
-
-        System.out.println("hola");
 
         System.setErr(new PrintStream("/dev/null"));
         Gui interfaz = new Gui();
@@ -67,6 +66,7 @@ public class Main {
                         File carpeta = new File(directoryPath);
                         if (!carpeta.exists()) {
                             System.out.println("¡¡No existe el directorio especificado!!");
+                            interfaz.pause();
                             break;
                         }
 
@@ -120,12 +120,70 @@ public class Main {
                         interfaz.clearConsole();
                         break;
                     case 4:
-                        documento.createPlotDataFile();
+                        System.out.println("Introduce el path del directorio a escanear");
+                        String directoryPath2 = reader.next();
+                        while (!Pattern.matches("[a-zA-Z0-9\\/]+",directoryPath2)) {
+                            System.out.println("Introduce un directorio correcto");
+                            directoryPath2 = reader.next();
+                        }
+
+                        File carpeta2 = new File(directoryPath2);
+                        File nuevaCarpeta = new File("./data");
+                        nuevaCarpeta.mkdir();
+
+                        if (!carpeta2.exists()) {
+                            System.out.println("¡¡No existe el directorio especificado!!");
+                            interfaz.pause();
+                            break;
+                        }
+                        File[] archivos2 = carpeta2.listFiles();
+
+                        FileWriter comandoTotal = new FileWriter("comandos_gnuplot.p");
+
+                        String totalCommand = "";
+                        String command1 = "#0.- Establece el titulo de la tabla y el nombre de los ejes vertical y horizontal\n\nset title 'Terminos'\nset xlabel 'Ranking'\nset ylabel 'Frecuencia'\n\n#1.- Gráficos de cada libro sin suavizar. Copiar y pegar en GNUPLOT cada linea de forma independiente\n\n";
+                        String command2 = "\n#2.- Dibuja la grafica suavizada por cada libro. \n#Copiar y pegar en GNUPLOT cada línea de forma individual\n\n";
+                        String command3 = "\n#3.- Creamos la funcion f(x).\n\nf(x) = log (k) -m*x\n";
+                        String command4 = "\n#4.- Creamos la tabla suavizada\n\n";
+                        String command5 = "\n#5.- Dibujamos en un solo gráfico todas las gráficas y el ajuste lineal\n\nplot ";
+
+                        for (int i=0; i< archivos2.length; i++) {
+                            String nombreFichero = "";
+                            nombreFichero = (archivos2[i].toString()).replace(carpeta2.toString() + "/", "");
+                            String lenguaje = "";
+                            nombreFichero = nombreFichero.substring(0, nombreFichero.lastIndexOf('.'));
+                            System.out.println(nombreFichero);
+                            if (!nombreFichero.equals("")) {
+                                documento.setDataFilePath("./data/"+nombreFichero+"-"+"ms.data");
+                                documento.setBookPath(archivos2[i].toString());
+                                documento.createWFMap();
+                                documento.createPlotDataFile();
+
+                                lenguaje = (documento.getBookInfo(false, false))[3];
+                                command1 += "plot 'data/" + nombreFichero + "-" + "ms.data' using 1:3 title '"+lenguaje+"' with lines\n";
+                                command2 += "plot 'data/" + nombreFichero + "-" + "ms.data' using (log($1)):(log($3)) title '"+lenguaje+"' with lines\n";
+                                command4 += "fit f(x) 'data/" + nombreFichero + "-" + "ms.data' using (log($1)):(log($3)) via k,m\n";
+                                if (i != (archivos2.length) - 1) {
+                                    command5 += "'data/" + nombreFichero + "-" + "ms.data' using (log($1)):(log($3)) title '" + lenguaje + "' with lines, \\\n" +
+                                            " ";
+                                } else {
+                                    command5 += "'data/" + nombreFichero + "-" + "ms.data' using (log($1)):(log($3)) title '"+lenguaje+"' with lines, f(x) title 'Ajuste lineal general' \n";
+                                }
+
+                            }
+
+                        }
+
+
+                        totalCommand = command1 + command2 + command3 + command4 + command5;
+                        comandoTotal.write(totalCommand);
+                        comandoTotal.close();
                         interfaz.pause();
                         interfaz.clearConsole();
                         break;
                     case 5:
-                        System.out.println("plot 'mapfrecuency.data' using 2:3\nf(x) = a*x + b\nfit f(x) 'archivo.dat' using 2:3 via a,b");
+
+                        System.out.println("Con la opcion 4 se genera un archivo en la raíz del programa llamado plotP2.p en al cual están todos los comandos para crear las gráficas en GNUPLOT.\nPara usar ese programa se puede usar copiando y pegando las distintas opciones que hay en el archivo, o con el comando:\n\nload plotP2.p\t\tlanzado desde gnuplot");
                         interfaz.pause();
                         interfaz.clearConsole();
                         break;
@@ -137,6 +195,7 @@ public class Main {
                 }
             }catch (InputMismatchException e) {
                 System.out.println("Debes insertar un número de los existentes");
+                interfaz.pause();
                 reader.next();
             }
 
