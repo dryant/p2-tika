@@ -1,11 +1,17 @@
-/*
+/* Pedro Blanch Bejarano - UGR
+ * ============================================
+ * creado el 14 de octubre de 2020
+ *
  * Abrir una carpeta pasada por argumento y que:
- * lea todos los documentos en él,
- * leerlos,
- * extraer los links
- * separarlo en palabras
- * contar cuantas veces aparece cada palabra
- * y sacar por pantalla todos las palabras en orden de frecuencia de aparicion
+ *
+ * - lea todos los documentos en él,
+ * - leerlos,
+ * - extraer los links
+ * - separarlo en palabras
+ * - contar cuantas veces aparece cada palabra
+ * - y sacar por pantalla todos las palabras en orden de frecuencia de aparicion
+ *
+ * Libros que se pueden usar:
  *
  * /Users/dryant/Facultad/RI/P2/datos-20201006/sherlock.epub
  * /Users/dryant/Facultad/RI/P2/datos-20201006/dracula.epub
@@ -14,10 +20,10 @@
  *
  * Memoria
  * ==========
- * Cual es el problema
- * Como lo he resuelto
- * Parte de resultados
- * Como se ejecuta el software
+ * - Cual es el problema
+ * - Como lo he resuelto
+ * - Parte de resultados
+ * - Como se ejecuta el software
  *
  * */
 package tika.main;
