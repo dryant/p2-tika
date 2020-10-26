@@ -128,7 +128,7 @@ public class Main {
                     case 4:
                         System.out.println("Introduce el path del directorio a escanear");
                         String directoryPath2 = reader.next();
-                        while (!Pattern.matches("[a-zA-Z0-9\\/]+",directoryPath2)) {
+                        while (!Pattern.matches("[a-zA-Z0-9\\-\\.\\_\\/]+",directoryPath2)) {
                             System.out.println("Introduce un directorio correcto");
                             directoryPath2 = reader.next();
                         }
